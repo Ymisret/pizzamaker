@@ -34,28 +34,35 @@ def handle_show_status():
     view.show_status(current_state)
 
 
-def handle_restock():
-    mgs = model.restock_ingredients()
-    view.show_message(mgs)
+def handle_restock(name):
+    msg = model.restock_ingredients()
+    view.show_message(msg)
+
 
 def run_robot():
     view.show_welcome()
     name = view.ask_name()
+
     db_control.add_to_database(name)
     view.show_menu()
     choice = view.ask_menu_choice()
 
-    while True:
-        if choice == "1":
-            handle_make_pizza(name)
-        elif choice == "2":
-            handle_show_status()
-        elif choice == "3":
-            handle_restock()
-        elif choice == "0":
-            view.show_message("Выключение системы")
-            break
 
-        else:
-            view.show_error("Неизвестная команда")
+    while True:
+            if choice == "1":
+                handle_make_pizza(name)
+            elif choice == "2":
+                handle_show_status()
+            elif choice == "3":
+                if db_control.if_admin(name):
+                    if db_control.check_adminpass():
+                        handle_restock(name)
+                else:
+                    view.show_you_not_admin()
+            elif choice == "0":
+                view.show_message("Выключение системы")
+                break
+
+            else:
+                view.show_error("Неизвестная команда")
 

@@ -1,0 +1,1 @@
+admin_pass = '81dc9bdb52d04dc20036dbd8313ed055' # pass - 1234 (md5 hashed)

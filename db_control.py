@@ -1,5 +1,6 @@
 import json
-
+import hashlib
+import secret
 database = json.loads(open("database.json", 'r',encoding='utf-8').read())
 
 def check_name_in_db(name):
@@ -8,17 +9,30 @@ def check_name_in_db(name):
             return True
         else:
             return False
-    return False
 
 
 def add_to_database(name):
     if check_name_in_db(name):
         return False
     if check_name_in_db(name) == False:
-        database.update({name:{'заказы':{}}})
+        database.update({name:{'role':'user','заказы':{}}})
         print(database)
         json.dump(database,open('database.json','w',encoding='utf-8'),ensure_ascii=False)
         return True
+
+def if_admin(name):
+    for ids in database:
+        if name == ids:
+            if database[ids]['role'] == 'admin':
+                return True
+def check_adminpass():
+    admpass = input('Введите пароль от admin')
+    if hashlib.md5(bytes(admpass,'utf-8')).hexdigest() == secret.admin_pass:
+        return True
+    else:
+        return False
+
+
 
 def set_order_status(name,order,status):
     if status == 'making' or status == 'completed':

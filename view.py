@@ -12,17 +12,21 @@ def decor_func(input_func):
 def show_welcome():
     print(f"Робот пицца-мейкер запущен")
 
+
 def show_menu():
     print("Выберите действие: \n"
           "1. Сделать новую пиццу \n"
           "2. Посмотреть статус и запасы робота\n"
-          "3. Пополнить запасы робота\n"
+          "3. Пополнить запасы робота (только для админов)\n"
           "0. Выключить робота")
 
 def show_my_orders(name):
     orders = db_control.get_orders(name)
     for order in orders:
         print(f'Заказ {order}')
+
+def show_you_not_admin():
+    print('Вы не являетесь админом')
 
 def ask_name():
     return input("Введите ваше имя").strip().lower()

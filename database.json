@@ -1,1 +1,1 @@
-{"andrey": {"заказы": {"1": {"status": "completed"}}}}
+{"andrey": {"заказы": {"1": {"status": "completed"}}, "role": "admin"}, "admin": {"role": "user", "заказы": {}}, "g": {"role": "user", "заказы": {}}}
